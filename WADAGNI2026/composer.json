@@ -1,0 +1,33 @@
+{
+    "name": "clicalmani/tonka",
+    "type": "project",
+    "description": "Tonka Framework.",
+    "keywords": ["framework", "tonka"],
+    "license": "MIT",
+    "require": {
+        "clicalmani/console": "^2.5.8",
+        "clicalmani/cookie": "^1.1.2",
+        "clicalmani/database": "^3.1.8",
+        "clicalmani/foundation": "^2.4.0",
+        "clicalmani/psr": "^1.0.8",
+        "clicalmani/routing": "^2.2.5",
+        "clicalmani/validation": "^3.1.0",
+        "clicalmani/xpower": "^1.2.3"
+    },
+    "autoload": {
+        "psr-4": {
+            "App\\": "app/",
+            "Database\\Factories\\": "database/factories/",
+            "Database\\Seeders\\": "database/seeders/",
+            "Database\\Entities\\": "database/entities/",
+            "Test\\": "test/"
+        }
+    },
+    "config": {
+        "optimize-autoloader": true,
+        "preferred-install": "dist",
+        "sort-packages": true
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
