@@ -4,27 +4,16 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Application Timezone
+    | Application Name
     |--------------------------------------------------------------------------
     |
-    | Here you may specify the application name which will be used in the 
-    | application. The name is used to identify the application.
+    | This value is the name of your application, which will be used when the
+    | framework needs to place the application's name in a notification or
+    | other UI elements where an application name needs to be displayed.
     |
     */
 
-    'name' => env('APP_NAME', 'Tonka'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Application Timezone
-    |--------------------------------------------------------------------------
-    |
-    | Here you may specify the application version which will be used in the 
-    | application. The version is for versioning the application.
-    |
-    */
-
-    'version' => env('APP_VERSION', '1.0.0'),
+    'name' => env('APP_NAME', 'Laravel'),
 
     /*
     |--------------------------------------------------------------------------
@@ -58,13 +47,12 @@ return [
     |--------------------------------------------------------------------------
     |
     | This URL is used by the console to properly generate URLs when using
-    | the console command line tool. You should set this to the root of
-    | the application so that it's available within console commands.
+    | the Artisan command line tool. You should set this to the root of
+    | the application so that it's available within Artisan commands.
     |
     */
 
     'url' => env('APP_URL', 'http://localhost'),
-    'asset_url' => env('ASSET_URL'),
 
     /*
     |--------------------------------------------------------------------------
@@ -77,7 +65,7 @@ return [
     |
     */
 
-    'timezone' => env('APP_TIMEZONE', 'UTC'),
+    'timezone' => 'UTC',
 
     /*
     |--------------------------------------------------------------------------
@@ -85,7 +73,7 @@ return [
     |--------------------------------------------------------------------------
     |
     | The application locale determines the default locale that will be used
-    | by Tonka's translation / localization methods. This option can be
+    | by Laravel's translation / localization methods. This option can be
     | set to any locale for which you plan to have translation strings.
     |
     */
@@ -97,56 +85,42 @@ return [
     'faker_locale' => env('APP_FAKER_LOCALE', 'en_US'),
 
     /*
-    |---------------------------------------------------------------------------
-    | JSON 
-    |---------------------------------------------------------------------------
-    | 
-    | This settings instruct how to encode and decode json string and convert it 
-    | into a PHP value.
+    |--------------------------------------------------------------------------
+    | Encryption Key
+    |--------------------------------------------------------------------------
+    |
+    | This key is utilized by Laravel's encryption services and should be set
+    | to a random, 32 character string to ensure that all encrypted values
+    | are secure. You should do this prior to deploying the application.
+    |
     */
 
-    'json' => [
-        'encode' => [
-            'flags' => JSON_UNESCAPED_UNICODE,
-            'depth' => 512
-        ],
-        'decode' => [
-            'associative' => true,
-            'depth' => 512,
-            'flags' => JSON_PRESERVE_ZERO_FRACTION | JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES | JSON_NUMERIC_CHECK
-        ]
+    'cipher' => 'AES-256-CBC',
+
+    'key' => env('APP_KEY'),
+
+    'previous_keys' => [
+        ...array_filter(
+            explode(',', (string) env('APP_PREVIOUS_KEYS', ''))
+        ),
     ],
 
     /*
     |--------------------------------------------------------------------------
-    | Autoloaded Service Providers
+    | Maintenance Mode Driver
     |--------------------------------------------------------------------------
     |
-    | The service providers listed here will be automatically loaded on the
-    | request to your application. Feel free to add your own services to
-    | this array to grant expanded functionality to your applications.
+    | These configuration options determine the driver used to determine and
+    | manage Laravel's "maintenance mode" status. The "cache" driver will
+    | allow maintenance mode to be controlled across multiple machines.
+    |
+    | Supported drivers: "file", "cache"
     |
     */
 
-    'providers' => [
+    'maintenance' => [
+        'driver' => env('APP_MAINTENANCE_DRIVER', 'file'),
+        'store' => env('APP_MAINTENANCE_STORE', 'database'),
+    ],
 
-        /*
-         * Tonka Framework Service Providers...
-         */
-        Clicalmani\Foundation\Auth\AuthServiceProvider::class,
-        Clicalmani\Foundation\Providers\HelpersServiceProvider::class,
-        Clicalmani\Foundation\Auth\EncryptionServiceProvider::class,
-        Clicalmani\Foundation\Providers\RouteServiceProvider::class,
-        Clicalmani\Foundation\Providers\LogServiceProvider::class,
-        Clicalmani\Foundation\Providers\ContainerServiceProvider::class,
-        Clicalmani\Foundation\Providers\ValidationServiceProvider::class,
-        
-        /*
-         * Application Service Providers...
-         */
-        App\Providers\SessionServiceProvider::class,
-        App\Providers\AppServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
-    ]
 ];

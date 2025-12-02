@@ -1,27 +1,24 @@
 <?php
+
 namespace App\Providers;
 
-use Clicalmani\Foundation\Providers\ServiceProvider;
+use Illuminate\Support\ServiceProvider;
 
 class AppServiceProvider extends ServiceProvider
 {
     /**
-     * Register
-     * 
-     * @return void
+     * Register any application services.
      */
-    public function register() : void
+    public function register(): void
     {
-        // ...
+        //
     }
 
     /**
-     * Bootstrap
-     * 
-     * @return void
+     * Bootstrap any application services.
      */
     public function boot(): void
     {
-        // ...
+        //
     }
 }

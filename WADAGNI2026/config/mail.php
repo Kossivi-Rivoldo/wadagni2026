@@ -38,49 +38,63 @@ return [
     'mailers' => [
 
         'smtp' => [
-            'scheme' => env('MAIL_MAILER', 'smtp'),
+            'transport' => 'smtp',
+            'scheme' => env('MAIL_SCHEME'),
+            'url' => env('MAIL_URL'),
             'host' => env('MAIL_HOST', '127.0.0.1'),
             'port' => env('MAIL_PORT', 2525),
             'username' => env('MAIL_USERNAME'),
-            'password' => env('MAIL_PASSWORD')
+            'password' => env('MAIL_PASSWORD'),
+            'timeout' => null,
+            'local_domain' => env('MAIL_EHLO_DOMAIN', parse_url((string) env('APP_URL', 'http://localhost'), PHP_URL_HOST)),
+        ],
+
+        'ses' => [
+            'transport' => 'ses',
         ],
 
         'postmark' => [
-            'schema' => 'postmark+smtp',
-            'host' => 'default',
-            'port' => null,
-            'username' => 'ID',
-            'password' => null
+            'transport' => 'postmark',
+            // 'message_stream_id' => env('POSTMARK_MESSAGE_STREAM_ID'),
+            // 'client' => [
+            //     'timeout' => 5,
+            // ],
         ],
 
         'resend' => [
-            'schema' => 'resend+smtp',
-            'host' => 'default',
-            'port' => null,
-            'username' => 'resend',
-            'password' => 'API_KEY'
+            'transport' => 'resend',
         ],
 
         'sendmail' => [
-            'schema' => 'sendmail',
-            'host' => 'default',
-            'port' => null,
-            'username' => null,
-            'password' => null
+            'transport' => 'sendmail',
+            'path' => env('MAIL_SENDMAIL_PATH', '/usr/sbin/sendmail -bs -i'),
+        ],
+
+        'log' => [
+            'transport' => 'log',
+            'channel' => env('MAIL_LOG_CHANNEL'),
+        ],
+
+        'array' => [
+            'transport' => 'array',
         ],
 
         'failover' => [
+            'transport' => 'failover',
             'mailers' => [
                 'smtp',
-                'postmark',
+                'log',
             ],
+            'retry_after' => 60,
         ],
 
         'roundrobin' => [
+            'transport' => 'roundrobin',
             'mailers' => [
-                'smtp',
+                'ses',
                 'postmark',
             ],
+            'retry_after' => 60,
         ],
 
     ],
@@ -99,38 +113,6 @@ return [
     'from' => [
         'address' => env('MAIL_FROM_ADDRESS', 'hello@example.com'),
         'name' => env('MAIL_FROM_NAME', 'Example'),
-    ],
-
-    'to' => [
-        'address' => env('MAIL_TO_ADDRESS', ''),
-        'name' => env('MAIL_TO_NAME', ''),
-    ],
-
-    'cc' => [
-        'address' => env('MAIL_CC_ADDRESS', ''),
-        'name' => env('MAIL_CC_NAME', ''),
-    ],
-
-    'headers' => [
-        'dates' => [
-            'X-Mailer-Date' => \DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s'), new \DateTimeZone('UTC')),
-            'X-Mailer-Received' => \DateTime::createFromFormat('Y-m-d H:i:s', date('Y-m-d H:i:s'), new \DateTimeZone('UTC')),
-        ],
-        'mailbox' => [
-            'X-Mailer-From' => 'Clicalmani Mailer <' . env('MAIL_FROM_ADDRESS') . '>',
-            'X-Mailer-To' => 'Clicalmani Mailer <' . env('MAIL_TO_ADDRESS', '') . '>',
-        ],
-        'tags' => ['password-reset'],
-        'metadata' => [
-            'X-Mailer' => 'Clicalmani Mailer',
-            'X-Mailer-Version' => '2.3.4',
-        ],
-        'unstructured' => [
-            'X-Mailer-Header' => 'Clicalmani Mailer',
-        ],
-        'parametized' => [
-            'X-Mailer-Param' => 'Clicalmani Mailer',
-        ]
     ],
 
 ];

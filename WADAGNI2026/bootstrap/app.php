@@ -1,31 +1,18 @@
 <?php
 
-/**
- * |-------------------------------------------------------------------------------
- * | Application Bootstrap File
- * |-------------------------------------------------------------------------------
- * This file is responsible for bootstrapping the application.
- * It sets up the application instance, loads necessary services, and runs the application.
- * 
- * @package Clicalmani\Foundation
- * @author Clicalmani
- * @version 2.3.4
- * @link https://github.com/clicalmani/foundation
- */
+use Illuminate\Foundation\Application;
+use Illuminate\Foundation\Configuration\Exceptions;
+use Illuminate\Foundation\Configuration\Middleware;
 
-
-use Clicalmani\Foundation\Maker\Application;
-use Symfony\Component\DependencyInjection\Loader\Configurator\DefaultsConfigurator;
-use Symfony\Component\DependencyInjection\Loader\Configurator\ServiceConfigurator;
-
-return Application::setup(rootPath: dirname(__DIR__))
-            ->withService(static function(Application $app) {
-                $app->addService('smtp.mailer.transport', [\Clicalmani\Foundation\Mail\MailerTransport::class]);
-                $app->addService(
-                    'smtp.mailer', 
-                    [
-                        \Clicalmani\Foundation\Mail\Mailer::class,
-                        static fn(ServiceConfigurator|DefaultsConfigurator $config) => $config->args([$app->dependency('service', 'smtp.mailer.transport')])
-                    ]);
-            })
-            ->run();
+return Application::configure(basePath: dirname(__DIR__))
+    ->withRouting(
+        web: __DIR__.'/../routes/web.php',
+        commands: __DIR__.'/../routes/console.php',
+        health: '/up',
+    )
+    ->withMiddleware(function (Middleware $middleware): void {
+        //
+    })
+    ->withExceptions(function (Exceptions $exceptions): void {
+        //
+    })->create();

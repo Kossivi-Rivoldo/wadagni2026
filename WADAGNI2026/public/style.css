@@ -1,0 +1,31 @@
+ body { font-family: Arial, sans-serif; }
+    .topbar { background:#0d47a1; color:white; padding:6px 0; font-size:14px; }
+    /* HERO: utiliser l'image fournie pour coller à la maquette */
+    .hero {
+      background-image: url('/image/11.jpeg');
+      background-repeat: no-repeat;
+      background-size: cover;
+      /* Ajuster la position pour montrer la bonne partie de l'image (top crop comme sur la maquette) */
+      background-position: center -120px;
+      height:560px;
+      position:relative;
+      display:block;
+    }
+    .hero::before{
+      /* dégrader sombre pour respecter la maquette */
+      content:"";
+      position:absolute; inset:0; background:linear-gradient(90deg, rgba(3,37,76,0.7) 0%, rgba(3,37,76,0.45) 60%);
+    }
+    .hero-overlay { position:relative; z-index:2; color:white; display:flex; flex-direction:column; justify-content:center; height:100%; padding-left:60px; padding-right:20px; }
+    .vision-img { position:relative; }
+    .quote-box { position:absolute; bottom:20px; right:20px; background:#1e56a0; color:white; padding:20px; width:220px; border-radius:8px; font-size:14px; }
+    .cta { background:#1e56a0; color:white; padding:60px 0; text-align:center; }
+    .footer { background:#0d47a1; color:white; padding:50px 0; }
+    .footer a { color:white; text-decoration:none; }
+
+    /* Responsive tweaks pour coller à la maquette mobile */
+    @media (max-width: 768px){
+      .hero{background-position:center -40px; height:420px}
+      .hero-overlay{padding-left:20px;padding-right:20px}
+      .quote-box{position:static;margin-top:15px;width:auto}
+    }
