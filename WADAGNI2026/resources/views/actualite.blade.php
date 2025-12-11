@@ -81,7 +81,7 @@
     <header>
         <div class="container d-flex align-items-center justify-content-between py-3">
             <div class="brand">
-                <img src="/mnt/data/logo.png" alt="logo">
+                <img src="image/logo.png" alt="logo">
                 <div>
                     <div style="font-weight:700; color:var(--blue); font-size:18px">JEUNESSE WADAGNI NATIONNALE</div>
                     <div style="font-size:12px; color:#6b7aa0">Mouvement citoyen</div>
@@ -89,14 +89,20 @@
             </div>
 
             <nav class="d-none d-lg-flex nav-links">
-                <a class="nav-link" href="#">Accueil</a>
-                <a class="nav-link" href="#">Actualités</a>
-                <a class="nav-link" href="#">Programme</a>
-                <a class="nav-link" href="#">Contact</a>
-            </nav>
-
+            <a class="nav-link" href="/home">Accueil</a>
+            <a class="nav-link" href="/actualite">Actualités</a>
+            <a class="nav-link" href="/evenement">Événements</a>
+            <a class="nav-link" href="/programme">Programme</a>
+            <a class="nav-link" href="/contact">Contact</a>
+        </nav>
+        
+            
+            
+   
+ 
             <div class="d-flex align-items-center">
-                <a class="don-btn me-2" href="#">Faire un don</a>
+                <a class="don-btn me-2" href="/dons">Faire un don</a>
+                <a class="btn btn-outline-primary px-4" href="/login">Se connecter</a>
             </div>
         </div>
     </header>
@@ -130,53 +136,50 @@
         </div>
     </section>
 
-    <!-- 3 CARTES + SIDE BUTTONS -->
-    <section class="news-grid py-4">
-        <div class="container">
-            <div class="row g-4">
-                <div class="col-lg-9">
-                    <div class="row g-3">
+<!-- 3 CARTES + SIDE BUTTONS -->
+<section class="news-grid py-4">
+    <div class="container">
+        <div class="row g-4">
+            <div class="col-lg-9">
+                <div class="row g-3">
+                    @foreach($articles as $article)
                         <div class="col-md-4">
                             <div class="card shadow-sm">
-                                <img src="/image/10.jpeg" alt="" class="card-img-top">
+                                <img src="{{ $article->image ? asset('storage/articles/' . $article->image) : '/image/10.jpeg' }}" 
+                                    alt="" class="card-img-top">
+
                                 <div class="card-body">
-                                    <h6>Titre : Grande mobilisation citoyenne</h6>
-                                    <p class="mb-0">Retour sur les actions menées lors de la dernière grande mobilisation.</p>
+                                    <h6>Titre : {{ $article->titre_art }}</h6>
+                                    <p class="mb-2">{{ $article->extr_art }}</p> <!-- Affichage de l'extrait -->
+                                    <small class="text-muted">Publié par {{ $article->user->nom ?? 'Admin' }} le {{ $article->created_at->format('d/m/Y') }}</small>
+                                    <div class="mt-2">
+                                        <a href="{{ route('articles.show', $article->id_art) }}" class="btn btn-sm btn-primary">Voir plus</a>
+                                    </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="col-md-4">
-                            <div class="card shadow-sm">
-                                <img src="/image/10.jpeg" alt="" class="card-img-top">
-                                <div class="card-body">
-                                    <h6>Programme d’accompagnement</h6>
-                                    <p class="mb-0">Lancement d'un programme d'accompagnement pour les jeunes.</p>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="col-md-4">
-                            <div class="card shadow-sm">
-                                <img src="/image/10.jpeg" alt="" class="card-img-top">
-                                <div class="card-body">
-                                    <h6>Campagne nationale de sensibilisation</h6>
-                                    <p class="mb-0">Détails de la nouvelle campagne de sensibilisation nationale.</p>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
+                    @endforeach
                 </div>
 
-                <div class="col-lg-3">
-                    <div class="side-buttons">
-                        <a href="#">Actualités</a>
-                        <a href="#">Vidéos</a>
-                        <a href="#">Communiqués</a>
-                        <a href="#">Agenda</a>
-                    </div>
+                <!-- Pagination -->
+                <div class="mt-3">
+                    {{ $articles->links('pagination::bootstrap-5') }}
+                </div>
+            </div>
+
+            <!-- Side buttons -->
+            <div class="col-lg-3">
+                <div class="side-buttons">
+                    <a href="#">Actualités</a>
+                    <a href="#">Vidéos</a>
+                    <a href="#">Communiqués</a>
+                    <a href="#">Agenda</a>
                 </div>
             </div>
         </div>
-    </section>
+    </div>
+</section>
+
 
    {{--  <!-- LISTE D'ACTUALITES (GRANDE) -->
     <section class="py-4">
@@ -209,77 +212,56 @@
         </div>
     </section> --}}
 
-    <!-- GRILLE VIDÉOS / MINIATURES -->
-    <section class="py-4 bg-light video-grid">
-        <div class="container">
-            <h4 class="fw-bold mb-4">Vidéos</h4>
-            <div class="row g-3">
-                <div class="col-md-4">
-                    <div class="card p-2 shadow-sm">
-                        <div class="thumb">▶</div>
-                        <div class="card-body">
-                            <h6 class="mb-1">Interview du candidat</h6>
-                            <p class="mb-0">Extraits de l'interview lors du meeting.</p>
+ <!-- GRILLE VIDÉOS / MINIATURES DYNAMIQUE -->
+<section class="py-4 bg-light video-grid">
+    <div class="container">
+        <h4 class="fw-bold mb-4">Vidéos</h4>
+        <div class="row g-3">
+            @foreach($articles as $article)
+                @if($article->video) <!-- Affiche uniquement les articles avec vidéo -->
+                    <div class="col-md-4">
+                        <div class="card p-2 shadow-sm">
+                           <video width="100%" controls>
+                                <source src="{{ asset('storage/videos/' . $article->video) }}" type="video/mp4">
+                                Votre navigateur ne supporte pas la lecture de cette vidéo.
+                            </video>
+                            <div class="card-body">
+                                <h6 class="mb-1">{{ $article->titre_art }}</h6>
+                                <p class="mb-0">{{ $article->extr_art }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card p-2 shadow-sm">
-                        <div class="thumb">▶</div>
-                        <div class="card-body">
-                            <h6 class="mb-1">Moments forts</h6>
-                            <p class="mb-0">Les meilleurs moments de la campagne.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card p-2 shadow-sm">
-                        <div class="thumb">▶</div>
-                        <div class="card-body">
-                            <h6 class="mb-1">Discours officiel</h6>
-                            <p class="mb-0">Discours d'orientation et perspectives.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                @endif
+            @endforeach
         </div>
-    </section>
+    </div>
+</section>
 
-    <!-- GRILLE VIDÉOS / MINIATURES -->
-    <section class="py-4 bg-light video-grid">
-        <div class="container">
-            
-            <div class="row g-3">
-                <div class="col-md-4">
-                    <div class="card p-2 shadow-sm">
-                        <div class="thumb">▶</div>
-                        <div class="card-body">
-                            <h6 class="mb-1">Interview du candidat</h6>
-                            <p class="mb-0">Extraits de l'interview lors du meeting.</p>
+<!-- DEUXIÈME SECTION VIDÉOS / MINIATURES DYNAMIQUE -->
+<section class="py-4 bg-light video-grid">
+    <div class="container">
+        <div class="row g-3">
+            @foreach($articles as $article)
+                @if($article->video)
+                    <div class="col-md-4">
+                        <div class="card p-2 shadow-sm">
+                            <video width="100%" controls>
+                                <source src="{{ asset('storage/videos/' . $article->video) }}" type="video/mp4">
+                                Votre navigateur ne supporte pas la lecture de cette vidéo.
+                            </video>
+                            <div class="card-body">
+                                <h6 class="mb-1">{{ $article->titre_art }}</h6>
+                                <p class="mb-0">{{ $article->extr_art }}</p>
+                            </div>
                         </div>
                     </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card p-2 shadow-sm">
-                        <div class="thumb">▶</div>
-                        <div class="card-body">
-                            <h6 class="mb-1">Moments forts</h6>
-                            <p class="mb-0">Les meilleurs moments de la campagne.</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="col-md-4">
-                    <div class="card p-2 shadow-sm">
-                        <div class="thumb">▶</div>
-                        <div class="card-body">
-                            <h6 class="mb-1">Discours officiel</h6>
-                            <p class="mb-0">Discours d'orientation et perspectives.</p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+                @endif
+            @endforeach
         </div>
-    </section>
+    </div>
+</section>
+
+
 
     <!-- CTA SECTION -->
 <section class="cta">

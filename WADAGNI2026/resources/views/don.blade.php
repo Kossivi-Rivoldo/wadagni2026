@@ -87,80 +87,114 @@
         </div>
     </div>
 </header>
+<div class="container mt-5">
+    <h2>Faire un don</h2>
 
-<!-- Événements à venir -->
-<section class="news-grid py-4" style="color: #0d47a1">
-    <div class="container">
-        <h3>Événements à venir</h3>
-        <div class="row g-4">
-            <div class="col-lg-9">
-                <div class="row g-3">
-                    @foreach($evenements->where('date', '>=', now()) as $event)
-                        <div class="col-md-4">
-                            <div class="card shadow-sm">
-                                <img src="{{ $event->image ? asset('storage/evenements/' . $event->image) : '/image/10.jpeg' }}" alt="" class="card-img-top">
+    @if(session('success'))
+        <div class="alert alert-success">{{ session('success') }}</div>
+    @endif
 
-                                <div class="card-body">
-                                    <h6>Titre : {{ $event->titre }}</h6>
-                                    <p class="mb-0">{{ $event->description }}</p>
-                                    <small class="text-muted">Publié par {{ $event->user->nom ?? 'Admin' }} le {{ $event->created_at->format('d/m/Y') }}</small>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
+    <form action="{{ route('don.store') }}" method="POST">
+        @csrf
 
-                <!-- Pagination -->
-                <div class="mt-3">
-                    {{ $evenements->links('pagination::bootstrap-5') }}
-                </div>
-            </div>
-
-            <div class="col-lg-3">
-                <div class="side-buttons">
-                    <a href="#">Actualités</a>
-                    <a href="#">Vidéos</a>
-                    <a href="#">Communiqués</a>
-                    <a href="#">Agenda</a>
-                </div>
-            </div>
+        <div class="mb-3">
+            <label for="nom_donateur" class="form-label">Nom du donateur</label>
+            <input type="text" name="nom_donateur" id="nom_donateur" class="form-control" value="{{ old('nom_donateur') }}">
+            @error('nom_donateur')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
         </div>
-    </div>
-</section>
 
-<!-- Événements passés -->
-<section class="news-grid py-4">
-    <div class="container">
-        <h3 style="color: #0d47a1">Événements passés</h3>
-        <div class="row g-4">
-            <div class="col-lg-9">
-                <div class="row g-3">
-                    @foreach($evenements->where('date', '<', now()) as $event)
-                        <div class="col-md-4">
-                            <div class="card shadow-sm">
-                              
-                                 <img src="{{ $event->image ? asset('storage/evenements/' . $event->image) : '/image/10.jpeg' }}" alt="" class="card-img-top">
-
-
-                                <div class="card-body">
-                                    <h6>Theme : {{ $event->theme}}</h6>
-                                    <p class="mb-0">{{ $event->lieux}}</p>
-                                    <p class="mb-0">{{ $event->heure}}</p>
-                                    <small class="text-muted">Publié par {{ $event->user->nom ?? 'Admin' }} le {{ $event->created_at->format('d/m/Y') }}</small>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-
-                <!-- Pagination -->
-                <div class="mt-3">
-                    {{ $evenements->links('pagination::bootstrap-5') }}
-                </div>
-            </div>
+        <div class="mb-3">
+            <label for="type_don" class="form-label">Type de don</label>
+            <select name="type_don" id="type_don" class="form-control">
+                <option value="">-- Choisir --</option>
+                <option value="espece" {{ old('type_don') == 'espece' ? 'selected' : '' }}>Espèce</option>
+                <option value="nature" {{ old('type_don') == 'nature' ? 'selected' : '' }}>Nature</option>
+            </select>
+            @error('type_don')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
         </div>
-    </div>
-</section>
+
+        <div class="mb-3" id="moyen_div" style="display: none;">
+            <label for="moyen_paiement" class="form-label">Moyen de paiement</label>
+            <select name="moyen_paiement" id="moyen_paiement" class="form-control">
+                <option value="">-- Choisir --</option>
+                <option value="mobile_money" {{ old('moyen_paiement') == 'mobile_money' ? 'selected' : '' }}>Mobile Money</option>
+                <option value="paypal" {{ old('moyen_paiement') == 'paypal' ? 'selected' : '' }}>PayPal</option>
+                <option value="carte_bancaire" {{ old('moyen_paiement') == 'carte_bancaire' ? 'selected' : '' }}>Carte bancaire</option>
+            </select>
+            @error('moyen_paiement')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+
+        <div class="mb-3" id="montant_div" style="display: none;">
+            <label for="montant" class="form-label">Montant (en FCFA)</label>
+            <input type="number" name="montant" id="montant" class="form-control" value="{{ old('montant') }}">
+            @error('montant')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+
+        <div class="mb-3" id="quantite_div" style="display: none;">
+            <label for="quantite" class="form-label">Quantité</label>
+            <input type="number" name="quantite" id="quantite" class="form-control" value="{{ old('quantite') }}">
+            @error('quantite')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+
+        <div class="mb-3" id="description_div" style="display: none;">
+            <label for="description" class="form-label">Description du don</label>
+            <textarea name="description" id="description" class="form-control">{{ old('description') }}</textarea>
+            @error('description')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div> 
+
+
+        <div class="mb-3">
+            <label for="date" class="form-label">Date du don</label>
+            <input type="date" name="date" id="date" class="form-control" value="{{ old('date', date('Y-m-d')) }}">
+            @error('date')
+                <small class="text-danger">{{ $message }}</small>
+            @enderror
+        </div>
+
+        <button type="submit" class="btn btn-primary">Enregistrer</button>
+    </form>
+</div>
+<script>
+const typeDon = document.getElementById('type_don');
+const montantDiv = document.getElementById('montant_div');
+const quantiteDiv = document.getElementById('quantite_div');
+const descriptionDiv = document.getElementById('description_div');
+const moyenDiv = document.getElementById('moyen_div');
+
+function toggleFields() {
+    if(typeDon.value === 'espece') {
+        montantDiv.style.display = 'block';
+        moyenDiv.style.display = 'block';
+        quantiteDiv.style.display = 'none';
+        descriptionDiv.style.display = 'none';
+    } else if(typeDon.value === 'nature') {
+        montantDiv.style.display = 'none';
+        moyenDiv.style.display = 'none';
+        quantiteDiv.style.display = 'block';
+        descriptionDiv.style.display = 'block';
+    } else {
+        montantDiv.style.display = 'none';
+        moyenDiv.style.display = 'none';
+        quantiteDiv.style.display = 'none';
+        descriptionDiv.style.display = 'none';
+    }
+}
+
+typeDon.addEventListener('change', toggleFields);
+window.addEventListener('load', toggleFields);
+</script>
 {{-- IDH26 --}}
 <!-- FOOTER -->
 <footer class="footer">

@@ -6,31 +6,81 @@
   <title>Jeunesse WADAGNI Nationale</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
   <link rel="stylesheet" href="style.css">
-  
-    
+ <style>
+        :root{
+            --blue-dark:#07215a;
+            --blue:#0A2C77;
+            --accent:#1e56a0;
+            --muted:#f5f7fb;
+        }
+        body{font-family: 'Segoe UI', Roboto, Arial, sans-serif; color:#222}
+        .top-bar{background:var(--blue-dark); color:#fff; font-size:14px; padding:6px 0}
+        header{background:#fff; border-bottom:1px solid #e6eefc}
+        .brand{display:flex; align-items:center; gap:12px}
+        .brand img{height:52px}
+        .nav-links .nav-link{color:var(--blue); font-weight:600; padding:10px 12px}
+        .don-btn{background:var(--blue); color:#fff; padding:8px 18px; border-radius:6px}
+        .page-banner{background:var(--blue); color:#fff; padding:18px 0; text-align:center; font-size:20px; font-weight:700}
+        .main-hero{padding:34px 0}
+        .hero-left{display:flex; align-items:flex-start; justify-content:center}
+        .hero-left .photo{width:320px; height:360px; overflow:hidden; border-radius:8px; box-shadow:0 6px 18px rgba(10,44,119,0.18);}
+        .hero-left .photo img{width:100%; height:100%; object-fit:cover; object-position:center top}
+        .hero-right .info-box{background:var(--blue); color:#fff; padding:28px; border-radius:8px; position:relative}
+        .info-box h3{font-size:22px; font-weight:700}
+        .info-box p{font-size:15px; margin-top:12px}
+        .info-box .cta-row{margin-top:18px}
+        .info-box .btn-white{background:#fff; color:var(--blue); font-weight:700}
+        .news-grid .card{border:0; border-radius:8px; overflow:hidden}
+        .news-grid .card img{height:160px; object-fit:cover}
+        .news-grid .card .card-body{padding:14px}
+        .side-buttons a{display:block; background:var(--blue); color:#fff; padding:12px; border-radius:6px; text-align:center; font-weight:600; margin-bottom:12px}
+        .big-news{display:flex; gap:18px; margin-bottom:24px; align-items:flex-start}
+        .big-news img{width:36%; height:160px; object-fit:cover; border-radius:6px}
+        .big-news .text h5{font-weight:700; margin-bottom:8px}
+        .big-news .text p{color:#556}
+        .video-grid .card{border:0}
+        .video-grid .thumb{height:160px; background-image: url('/image/11.jpeg'); border-radius:6px; display:flex; align-items:center; justify-content:center}
+        .cta { background:#1e56a0; color:white; padding:60px 0; text-align:center;  margin: 10px}
+        .footer { background:#0d47a1; color:white; padding:50px 0; }
+        .footer a { color:white; text-decoration:none; }
+        @media(max-width:991px){
+            .hero-left .photo{width:260px; height:300px}
+            .big-news img{width:40%}
+        }
+        @media(max-width:767px){
+            .hero-left .photo{width:100%; height:220px}
+            .hero-right .info-box{margin-top:18px}
+            .big-news{flex-direction:column}
+            .big-news img{width:100%; height:220px}
+        }
+    </style>
 </head>
 <body>
 
 <!-- TOP BAR -->
-<div class="topbar text-center">JEUNESSE WADAGNI DU BENIN 🇧🇯 — Rejoignez le mouvement</div>
+<div class="top-bar text-center">République du Bénin — JEUNESSE WADAGNI NATIONALE</div>
 
-<!-- NAVBAR -->
-<nav class="navbar navbar-expand-lg bg-white shadow-sm py-3">
-  <div class="container">
-    <a class="navbar-brand d-flex align-items-center gap-2" href="#">
-      <img src="/mnt/data/logo.png" width="40" alt="logo" />
-      <span class="fw-bold text-primary">JEUNESSE WADAGNI NATIONNALE</span>
-    </a>
-    <button class="navbar-toggler" data-bs-toggle="collapse" data-bs-target="#nav">
-      <span class="navbar-toggler-icon"></span>
-    </button>
-    <div class="collapse navbar-collapse" id="nav">
-      <ul class="navbar-nav mx-auto">
-        <li class="nav-item"><a class="nav-link" href="#">Actualités</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">À propos</a></li>
-        <li class="nav-item"><a class="nav-link" href="#">Contacts</a></li>
-      </ul>
-      <a class="btn btn-primary px-4" href="#">Faire un don</a>
+<!-- HEADER -->
+<header>
+    <div class="container d-flex align-items-center justify-content-between py-3">
+        <div class="brand">
+            <img src="image/logo.png" alt="logo">
+            <div>
+                <div style="font-weight:700; color:var(--blue); font-size:18px">JEUNESSE WADAGNI NATIONNALE</div>
+                <div style="font-size:12px; color:#6b7aa0">Mouvement citoyen</div>
+            </div>
+        </div>
+
+        <nav class="d-none d-lg-flex nav-links">
+            <a class="nav-link" href="/home">Accueil</a>
+            <a class="nav-link" href="/actualite">Actualités</a>
+            <a class="nav-link" href="/evenement">Événements</a>
+            <a class="nav-link" href="/programme">Programme</a>
+            <a class="nav-link" href="/contact">Contact</a>
+        </nav>
+         
+      <a class="btn btn-primary px-4" href="/dons">Faire un don</a>
+      <a class="btn btn-outline-primary px-4" href="/login">Se connecter</a>
     </div>
   </div>
 </nav>
@@ -66,45 +116,33 @@
 
 <!-- ACTUALITÉS -->
 <section class="py-5 bg-light">
-  <div class="container text-center">
-    <h2 class="fw-bold text-primary mb-4">Actualités</h2>
-    <p class="mb-5">Suivez les dernières actions de la Jeunesse WADAGNI Nationale.</p>
-    <div class="row g-4">
-      <div class="col-md-4">
-        <div class="card border-0 shadow-sm p-2">
-          <img src="/image/10.jpeg" class="card-img-top rounded" alt="actu1" />
-          <div class="card-body text-start">
-            <h5 class="fw-bold">Grande mobilisation citoyenne</h5>
-            <p>Un événement exceptionnel rassemblant des milliers de jeunes…</p>
-            <a href="#" class="fw-bold text-primary">Lire plus →</a>
-          </div>
-        </div>
-      </div>
+    <div class="container">
+        <div class="row g-4">
+            @foreach($articles as $article)
+                <div class="col-md-4">
+                    <div class="card shadow-sm">
+                        <img src="{{ $article->image ? asset('storage/articles/' . $article->image) : '/image/10.jpeg' }}" 
+                             alt="" class="card-img-top">
 
-      <div class="col-md-4">
-        <div class="card border-0 shadow-sm p-2">
-          <img src="/image/10.jpeg" class="card-img-top rounded" alt="actu2" />
-          <div class="card-body text-start">
-            <h5 class="fw-bold">Programme d’initiative sociale</h5>
-            <p>Lancement d’un nouveau cadre d'accompagnement pour la jeunesse…</p>
-            <a href="#" class="fw-bold text-primary">Lire plus →</a>
-          </div>
-        </div>
-      </div>
+                        <div class="card-body">
+                            <h6>Titre : {{ $article->titre_art }}</h6>
+                            <p class="mb-2">{{ $article->extr_art }}</p>
+                            <small class="text-muted">
+                                Publié par {{ $article->user->nom ?? 'Admin' }} 
+                                le {{ $article->created_at->format('d/m/Y') }}
+                            </small>
 
-      <div class="col-md-4">
-        <div class="card border-0 shadow-sm p-2">
-          <img src="/image/10.jpeg" class="card-img-top rounded" alt="actu3" />
-          <div class="card-body text-start">
-            <h5 class="fw-bold">Nouvelle campagne nationale</h5>
-            <p>Une action d’impact pour la sensibilisation citoyenne…</p>
-            <a href="#" class="fw-bold text-primary">Lire plus →</a>
-          </div>
+                            <div class="mt-2">
+                                <a href="{{ route('articles.show', $article->id_art) }}" class="btn btn-sm btn-primary">
+                                    Voir plus
+                                </a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            @endforeach
         </div>
-      </div>
     </div>
-    <a href="#" class="btn btn-primary mt-5 px-5">Voir toutes les actualités</a>
-  </div>
 </section>
 
 <!-- CTA SECTION -->
