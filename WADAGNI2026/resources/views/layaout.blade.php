@@ -1,11 +1,12 @@
 <!DOCTYPE html>
 <html lang="fr">
 <head>
-    <meta charset="utf-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>Actualités — Jeunesse WADAGNI</title>
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
-    <style>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Jeunesse WADAGNI Nationale</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet" />
+  <link rel="stylesheet" href="style.css">
+ <style>
         :root{
             --blue-dark:#07215a;
             --blue:#0A2C77;
@@ -55,7 +56,7 @@
     </style>
 </head>
 <body>
-
+    
 <div class="bg-primary text-white text-center fw-bold py-2">
     <marquee>
         <h5>REJOIGNEZ LE MOUVEMENT JEUNESSE WADAGNI NATIONNALE  +229 97 00 00 00</h5>
@@ -68,7 +69,7 @@
 
         <!-- AJOUT DU LOGO + TEXTE EN FLEX -->
         <div class="d-flex align-items-center">
-               <img src="image/dagni.jpg" alt="logo" style="width:70px; height:70px; border-radius:50%; object-fit:cover;" class="me-2">
+              <img src="image/dagni.jpg" alt="logo" style="width:70px; height:70px; border-radius:50%; object-fit:cover;" class="me-2">
 
             <div class="text-primary fw-bold me-2 text-center" style="line-height: 0.9;">
                 JEUNESSE<br>WADAGNI<br>NATIONNALE
@@ -89,82 +90,9 @@
     </div>
 </header>
 
-<!-- Événements à venir -->
-<section class="news-grid py-4" style="color: #0d47a1">
-    <div class="container">
-        <h3>Événements à venir</h3>
-        <div class="row g-4">
-            <div class="col-lg-9">
-                <div class="row g-3">
-                    @foreach($evenements->where('date', '>=', now()) as $event)
-                        <div class="col-md-4">
-                            <div class="card shadow-sm">
-                                <img src="{{ $event->image ? asset('storage/evenements/' . $event->image) : '/image/10.jpeg' }}" alt="" class="card-img-top">
+    @yield('contente')
 
-                                <div class="card-body">
-                                    <h6>Titre : {{ $event->titre }}</h6>
-                                    <p class="mb-0">{{ $event->description }}</p>
-                                    <small class="text-muted">Publié par {{ $event->user->nom ?? 'Admin' }} le {{ $event->created_at->format('d/m/Y') }}</small>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-
-                <!-- Pagination -->
-                <div class="mt-3">
-                    {{ $evenements->links('pagination::bootstrap-5') }}
-                </div>
-            </div>
-
-            <div class="col-lg-3">
-                <div class="side-buttons">
-                    <a href="#">Actualités</a>
-                    <a href="#">Vidéos</a>
-                    <a href="#">Communiqués</a>
-                    <a href="#">Agenda</a>
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-
-<!-- Événements passés -->
-<section class="news-grid py-4">
-    <div class="container">
-        <h3 style="color: #0d47a1">Événements passés</h3>
-        <div class="row g-4">
-            <div class="col-lg-9">
-                <div class="row g-3">
-                    @foreach($evenements->where('date', '<', now()) as $event)
-                        <div class="col-md-4">
-                            <div class="card shadow-sm">
-                              
-                                 <img src="{{ $event->image ? asset('storage/evenements/' . $event->image) : '/image/10.jpeg' }}" alt="" class="card-img-top">
-
-
-                                <div class="card-body">
-                                    <h6>Theme : {{ $event->theme}}</h6>
-                                    <p class="mb-0">{{ $event->lieux}}</p>
-                                    <p class="mb-0">{{ $event->heure}}</p>
-                                    <small class="text-muted">Publié par {{ $event->user->nom ?? 'Admin' }} le {{ $event->created_at->format('d/m/Y') }}</small>
-                                </div>
-                            </div>
-                        </div>
-                    @endforeach
-                </div>
-
-                <!-- Pagination -->
-                <div class="mt-3">
-                    {{ $evenements->links('pagination::bootstrap-5') }}
-                </div>
-            </div>
-        </div>
-    </div>
-</section>
-{{-- IDH26 --}}
-
-    <!-- FOOTER  -->
+<!-- FOOTER  -->
     <footer class="bg-primary text-white py-5">
         <div class="container">
 
@@ -212,6 +140,6 @@
         </div>
     </footer>
 
-<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
 </body>
 </html>

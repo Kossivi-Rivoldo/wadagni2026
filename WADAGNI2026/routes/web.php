@@ -21,6 +21,14 @@ Route::get('/', function () { return view('welcome'); });
 Route::get('/home', [ArticleController::class, 'home'])->name('home');
 Route::get('/actualite', [ArticleController::class, 'index'])->name('actualite');
 Route::get('/evenement', [EvenementController::class, 'index'])->name('evenement');
+Route::get('/don', [DonController::class, 'create'])->name('don');
+Route::post('/donss', [DonController::class, 'store'])->name('don.store');
+Route::get('/don/callback', [DonController::class, 'fedapayCallback'])->name('don.callback');
+
+
+/* Route::get('/don/callback', [DonController::class, 'fedapayCallback'])
+    ->name('don.callback'); */
+
 
 
 /* Route::get('/don', [DonController::class, 'create'])->name('don.create');
@@ -43,6 +51,8 @@ Route::post('/login', [LoginController::class, 'login'])->name('login.submit');
 
 // Déconnexion
 Route::post('/logout', [LoginController::class, 'logout'])->name('logout');
+
+
 
 /*
 |--------------------------------------------------------------------------
@@ -133,3 +143,6 @@ Route::middleware([RoleMiddleware::class . ':admin,editeur'])->group(function ()
         ->name('categories.destroy');
 
 });
+
+
+

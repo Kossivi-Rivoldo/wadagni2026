@@ -1,40 +1,49 @@
 <?php
+
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Dons;
+use GuzzleHttp\Client;
 
 class DonController extends Controller
 {
-    // Afficher le formulaire
     public function create()
     {
         return view('don');
     }
 
-    // Enregistrer le don
-    public function store(Request $request)
-    {
-        $request->validate([
-            'nom_donateur' => 'required|string|max:255',
-            'type_don' => 'required|in:espece,nature',
-            'montant' => 'required_if:type_don,espece|nullable|numeric|min:0',
-            'quantite' => 'required_if:type_don,nature|nullable|integer|min:1',
-            'description' => 'nullable|string',
-            'date' => 'required|date',
-        ]);
+   public function store(Request $request)
+{
+    if($request->type_don === 'espece') {
+        // Vérifier que la transaction existe
+        if(!$request->transaction_id) {
+            return back()->with('error', 'Transaction introuvable. Paiement non validé.');
+        }
 
-        Dons::create($request->all());
-
-        return redirect()->back()->with('success', 'Don enregistré avec succès !');
+        // Ici tu peux appeler l’API FedaPay pour vérifier le paiement si tu veux
     }
 
-    public function liste()
-    {
-        // Pagination, 10 dons par page
-        $dons = Dons::orderBy('date', 'desc')->paginate(10);
+    // Stockage en base
+    Dons::create([
+        'nom_donateur' => $request->nom_donateur,
+        'type_don' => $request->type_don,
+        'montant' => $request->montant,
+        'moyen_paiement' => $request->moyen_paiement,
+        'date' => $request->date,
+        'transaction_id' => $request->transaction_id,
+        'quantite' => $request->quantite,
+        'description' => $request->description,
+    ]);
 
-        return view('don.liste', compact('dons'));
+    return back()->with('success', 'Don enregistré avec succès !');
 }
 
+
+    // Liste des dons
+    public function liste()
+    {
+        $dons = Dons::orderBy('date', 'desc')->paginate(10);
+        return view('don.liste', compact('dons'));
+    }
 }

@@ -56,36 +56,35 @@
 </head>
 <body>
 
-<div class="bg-primary text-white text-center fw-bold py-2">
-    <marquee>
-        <h5>REJOIGNEZ LE MOUVEMENT JEUNESSE WADAGNI NATIONNALE  +229 97 00 00 00</h5>
-    </marquee>
-</div>
+<!-- TOP BAR -->
+<div class="top-bar text-center">République du Bénin — JEUNESSE WADAGNI NATIONALE</div>
 
 <!-- HEADER -->
-<header class="bg-white py-3 shadow-sm">
-    <div class="container d-flex align-items-center justify-content-between">
-
-        <!-- AJOUT DU LOGO + TEXTE EN FLEX -->
-        <div class="d-flex align-items-center">
-               <img src="image/dagni.jpg" alt="logo" style="width:70px; height:70px; border-radius:50%; object-fit:cover;" class="me-2">
-
-            <div class="text-primary fw-bold me-2 text-center" style="line-height: 0.9;">
-                JEUNESSE<br>WADAGNI<br>NATIONNALE
+<header>
+    <div class="container d-flex align-items-center justify-content-between py-3">
+        <div class="brand">
+            <img src="image/logo.png" alt="logo">
+            <div>
+                <div style="font-weight:700; color:var(--blue); font-size:18px">JEUNESSE WADAGNI NATIONNALE</div>
+                <div style="font-size:12px; color:#6b7aa0">Mouvement citoyen</div>
             </div>
         </div>
 
-        <nav class="d-none d-md-flex gap-4">
-            <a href="home" class="text-primary fw-semibold text-decoration-none">Accueil</a>
-            <a href="programme" class="text-primary fw-semibold text-decoration-none">Programme</a>
-            <a href="evenement" class="text-primary fw-semibold text-decoration-none">Evénement</a>
-            <a href="actualite" class="text-primary fw-semibold text-decoration-none">Actualité</a>
-            <a href="benevolat" class="text-primary fw-semibold text-decoration-none">Bénévolat</a>
+        <nav class="d-none d-lg-flex nav-links">
+            <a class="nav-link" href="/home">Accueil</a>
+            <a class="nav-link" href="/actualite">Actualités</a>
+            <a class="nav-link" href="/evenement">Événements</a>
+            <a class="nav-link" href="/programme">Programme</a>
+            <a class="nav-link" href="/contact">Contact</a>
         </nav>
-
-        <a href="don" class="btn btn-primary px-4">Faire un don</a>
         
+      
+  
 
+        <div class="d-flex align-items-center">
+            <a class="don-btn me-2" href="/dons">Faire un don</a>
+            <a class="btn btn-outline-primary px-4" href="/login">Se connecter</a>
+        </div>
     </div>
 </header>
 
@@ -163,54 +162,32 @@
     </div>
 </section>
 {{-- IDH26 --}}
-
-    <!-- FOOTER  -->
-    <footer class="bg-primary text-white py-5">
-        <div class="container">
-
-            <div class="row d-flex">
-
-                <div class="col-md-4 mb-4 mb-md-0 text-center text-md-start">
-                    <div class="d-flex align-items-center gap-3">
-                           <img src="image/dagni.jpg" alt="logo" style="width:70px; height:70px; border-radius:50%; object-fit:cover;" class="me-2">
-                        <h5 class="fw-bold m-0">
-                            JEUNESSE<br>WADAGNI<br>NATIONNALE
-                        </h5>
-                    </div>
-
-                    <p class="mt-3">
-                        Ensemble, construisons un Bénin fort et prospère. <br>
-                        Un leadership moderne pour un avenir meilleur.
-                    </p>
-                </div>
-
-                <div class="col-md-4 mb-4 mb-md-0">
-                    <h5 class="fw-bold">Liens Rapides</h5>
-                    <ul class="list-unstyled mt-3">
-                        <li><a class="text-white text-decoration-none" href="#">Accueil</a></li>
-                        <li><a class="text-white text-decoration-none" href="#">Programme</a></li>
-                        <li><a class="text-white text-decoration-none" href="#">Evénements</a></li>
-                        <li><a class="text-white text-decoration-none" href="#">Actualités</a></li>
-                    </ul>
-                </div>
-
-                <div class="col-md-4">
-                    <h5 class="fw-bold">Contacts</h5>
-                    <p class="mt-3">+229 97 00 00 00</p>
-                    <p>Lun - Sam: 8h - 18h</p>
-                    <a class="text-white text-decoration-none" href="#">Mentions Légales</a><br>
-                    <a class="text-white text-decoration-none" href="#">Politique de confidentialité</a>
-                </div>
-
-            </div>
-
-            <hr class="border-light mt-4">
-            <p class="text-center mt-3">
-                © 2024 JEUNESSE WADAGNI NATIONNALE – Tous droits réservés
-            </p>
-
-        </div>
-    </footer>
+<!-- FOOTER -->
+<footer class="footer">
+  <div class="container">
+    <div class="row">
+      <div class="col-md-4">
+        <h5 class="fw-bold">JEUNESSE WADAGNI</h5>
+        <p>Mouvement national pour une jeunesse engagée et citoyenne.</p>
+      </div>
+      <div class="col-md-4">
+        <h5 class="fw-bold">Liens</h5>
+        <ul class="list-unstyled">
+          <li><a href="#">Accueil</a></li>
+          <li><a href="#">Actualités</a></li>
+          <li><a href="#">À propos</a></li>
+          <li><a href="#">Contacts</a></li>
+        </ul>
+      </div>
+      <div class="col-md-4">
+        <h5 class="fw-bold">Nous contacter</h5>
+        <p>Email : contact@wadagni.org<br>Téléphone : +229 00 00 00 00</p>
+    
+      </div>
+      
+    </div>
+  </div>
+</footer>
 
 <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
 </body>

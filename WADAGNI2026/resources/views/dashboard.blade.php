@@ -120,7 +120,7 @@
                     <i class="bi bi-people"></i>
                     <span class="menu-text">Gestion des éditeurs</span>
                 </a>
-                <a href="{{ route('benevoles.index') }}">
+                <a href="{{ route('benevoles.liste') }}">
                     <i class="bi bi-person-badge"></i>
                     <span class="menu-text">Liste des bénévoles</span>
                 </a>

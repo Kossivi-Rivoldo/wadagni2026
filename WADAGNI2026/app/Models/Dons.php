@@ -17,5 +17,6 @@ class Dons extends Model
         'description',
         'moyen_paiement',
         'date',
+        'transactionId'
     ];
 }
